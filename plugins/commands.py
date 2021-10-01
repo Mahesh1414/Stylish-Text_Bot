@@ -24,7 +24,7 @@ async def start(c, m):
     buttons = [
         [
             InlineKeyboardButton('My Father 👨‍✈️', url=f"https://telegram.me/bryllbots"),
-            InlineKeyboardButton('Update Channel', url=f"https://telegram.me/MyTestBotZ"),
+            InlineKeyboardButton('Update Channel', url=f"https://telegram.me/MyTestBotZ")
         ]
     ]
     await m.reply_text(
