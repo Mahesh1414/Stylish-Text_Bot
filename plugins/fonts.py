@@ -1,8 +1,8 @@
 
 class Fonts:
     def typewriter(text):
-        style = <code>{
-            'a': '𝚊',
+        style = {
+            <code>'a': '𝚊'</code>,
             'b': '𝚋',
             'c': '𝚌',
             'd': '𝚍',
