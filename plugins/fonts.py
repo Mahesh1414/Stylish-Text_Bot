@@ -1,7 +1,7 @@
 
 class Fonts:
     def typewriter(text):
-        style = {
+        style = <code>{
             'a': '𝚊',
             'b': '𝚋',
             'c': '𝚌',
@@ -54,7 +54,7 @@ class Fonts:
             'X': '𝚇',
             'Y': '𝚈',
             'Z': '𝚉'
-        }
+        }</code>
         for i, j in style.items():
             text = text.replace(i, j)
         return text
