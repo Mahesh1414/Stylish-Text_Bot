@@ -134,7 +134,7 @@ async def style(c, m):
     if style == 'tiny':
         cls = Fonts.tiny
     if style == 'comic':
-        cls = Fonts.comic
+        cls = <code>Fonts.comic</code>
     if style ==  'sans':
         cls = Fonts.san
     if style == 'slant_sans':
@@ -193,7 +193,7 @@ async def style(c, m):
         cls = Fonts.strike
     if style == 'frozen':
         cls = Fonts.frozen
-    new_text = <code>cls</code>(m.message.reply_to_message.text)
+    new_text = cls(m.message.reply_to_message.text)
     try:
         await m.message.edit_text(new_text, reply_markup=m.message.reply_markup)
     except:
