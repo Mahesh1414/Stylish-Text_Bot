@@ -132,7 +132,7 @@ async def style(c, m):
     if style == 'script_bolt':
         cls = Fonts.bold_script
     if style == 'tiny':
-        s = Fonts.tiny
+        cls = Fonts.tiny
     if style == 'comic':
         cls = Fonts.comic
     if style ==  'sans':
