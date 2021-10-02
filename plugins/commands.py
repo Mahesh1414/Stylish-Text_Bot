@@ -37,9 +37,9 @@ async def start(c, m):
         text=text,
         reply_markup=InlineKeyboardMarkup(buttons)
     )
-    @Client.on_callback_query()
+@Client.on_callback_query()
 async def cb_handler(bot, update):
-    if update.data == "Close ✖️":
+    if update.data == "close":
        await update.message.delete()
     
 
