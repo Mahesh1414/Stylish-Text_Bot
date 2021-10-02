@@ -25,6 +25,9 @@ async def start(c, m):
         [
             InlineKeyboardButton('My Father 👨‍✈️', url=f"https://telegram.me/bryllbots"),
             InlineKeyboardButton('Update Channel', url=f"https://telegram.me/MyTestBotZ")
+        ],[
+            InlineKeyboardButton('Other Bot🤖', url=f"https://t.me/myTestbotz/15"),
+            InlineKeyboardButton('Share 📤', url=f"https://t.me/share/url?url=%F0%9F%99%8B%E2%80%8D%E2%99%82%20Hey%20Everyone%20%0A%0AToday%20I%20Just%20Found%20A%20Best%20Stylish%20Text%20Bot.%20This%20Bot%20Can%20Style%20any%20Text%0A%0A%F0%9F%A4%96%20Bot%20Link%20%3A%20%40bryll_urluploader_bot")
         ]
     ]
     await m.reply_text(
