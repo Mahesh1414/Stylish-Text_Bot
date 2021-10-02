@@ -29,7 +29,7 @@ async def start(c, m):
             InlineKeyboardButton('Other Bot🤖', url=f"https://t.me/myTestbotz/15"),
             InlineKeyboardButton('Share 📤', url=f"https://t.me/share/url?url=%F0%9F%99%8B%E2%80%8D%E2%99%82%20Hey%20Everyone%20%0A%0AToday%20I%20Just%20Found%20A%20Best%20Stylish%20Text%20Bot.%20This%20Bot%20Can%20Style%20any%20Text%0A%0A%F0%9F%A4%96%20Bot%20Link%20%3A%20%40bryll_urluploader_bot")
         ],[
-            InlineKeyboardButton('Close❌', callback_data='close')
+            InlineKeyboardButton('Close ✖️', callback_data='close')
         ]
 
     ]
@@ -37,6 +37,11 @@ async def start(c, m):
         text=text,
         reply_markup=InlineKeyboardMarkup(buttons)
     )
+    @Client.on_callback_query()
+async def cb_handler(bot, update):
+    if update.data == "Close ✖️":
+       await update.message.delete()
+    
 
 
 
