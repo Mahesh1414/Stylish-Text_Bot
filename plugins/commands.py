@@ -7,6 +7,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 @Client.on_message(filters.command('start'))
 async def start(c, m):
+    disable_web_page_preview=True,
     owner = await c.get_users(int(Config.OWNER_ID))
     owner_username = owner.username if owner.username else 'BRYLL BOTS'
 
