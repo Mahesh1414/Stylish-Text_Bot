@@ -18,7 +18,8 @@ async def start(c, m):
 
 `I can help you to get stylish fonts. Just send me some any text and see magic what I can do with it.`
 
-**👲 Maintained By: <a href='https://telegram.me/bryllbots'>BRYLL BOTS</a>**
+**👲 Maintained By: @bryllbots**
+
 """
 
     # Buttons
