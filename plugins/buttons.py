@@ -1,8 +1,7 @@
-import os
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 class BTNS(object):
   
-      START_BTN = [[
+  START_BTN = [[
      InlineKeyboardButton('Subjects', callback_data='subject_cd')
      ],[
      InlineKeyboardButton('❌ Close ✖', callback_data='close')
