@@ -13,7 +13,7 @@ logging.basicConfig()
 logger = logging.getLogger(__name__)
 
 
-@app.on_message(filters.command("start"))
+@Client.on_message(filters.command("start"))
 async def start(client, message):
     await message.reply_text(
         text=f"Hello {message.from_user.mention},\nI'm a telegram Education Bot From BRYLL EDUCATION bot by @bryllbots",
@@ -27,7 +27,7 @@ START_BTN = [[
      InlineKeyboardButton('❌ Close ✖', callback_data='close')
      ]]
 
-@app.on_message(filters.command("subject"))
+@Client.on_message(filters.command("subject"))
 async def subject(client,message):
     if message.from_user.id not in AUTH_USERS:
         await message.reply_text(
@@ -54,7 +54,7 @@ SUBJECT_BTN = [[
     ]]
                         
 
-@app.on_message(filters.command("biology"))
+@Client.on_message(filters.command("biology"))
 async def biology(client,message):
     await message.reply_text(
         text=f"Hey! {message.from_user.mention} Choose the Chapter which you want to study",
@@ -75,7 +75,7 @@ BCHAPTER_BTN = [[
      ]]
 
 
-@app.on_message(filters.command("physics"))
+@Client.on_message(filters.command("physics"))
 async def physics(client,message):
     await message.reply_text(
         text=f"Hey! {message.from_user.mention} Choose the Chapter which you want to study",
@@ -94,7 +94,7 @@ PCHAPTER_BTN = [[
       ]]
 
 
-@app.on_message(filters.command("chemistry"))
+@Client.on_message(filters.command("chemistry"))
 async def chemistry(client,message):
     await message.reply_text(
         text=f"Hey! {message.from_user.mention} Choose the Chapter which you want to study",
@@ -113,7 +113,7 @@ CCHAPTER_BTN = [[
        ]]
     
 
-@app.on_message(filters.command("me"))
+@Client.on_message(filters.command("me"))
 async def me(client,message):
     await message.reply_text(
         text=f"""**Your Details**
