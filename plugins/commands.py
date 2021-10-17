@@ -1,213 +1,127 @@
 import os
-from config import Config
-from .fonts import Fonts
+import logging
+import time
+import string
+import traceback
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+import datetime
+from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from telegraph import upload_file
+from Config import Config
+
+logging.basicConfig()
+logger = logging.getLogger(__name__)
 
 
-@Client.on_message(filters.command('start'))
-async def start(c, m):
-    disable_web_page_preview=True,
-    owner = await c.get_users(int(Config.OWNER_ID))
-    owner_username = owner.username if owner.username else 'BRYLL BOTS'
-
-    # start text
-    text = f"""🙋‍♂️Hey! {m.from_user.mention(style='md')},
-
-💡 ** I am Stylish Font Bot**
-
-`I can help you to get stylish fonts. Just send me some any text and see magic what I can do with it.`
-
-**👲 Maintained By: @bryllbots**
-
-"""
-
-    # Buttons
-    buttons = [
-        [
-            InlineKeyboardButton('My Father 👨‍✈️', url=f"https://telegram.me/bryllbots"),
-            InlineKeyboardButton('Update Channel', url=f"https://telegram.me/MyTestBotZ")
-        ],[
-            InlineKeyboardButton('Other Bot🤖', url=f"https://t.me/myTestbotz/15"),
-            InlineKeyboardButton('Share 📤', url=f"https://t.me/share/url?url=%F0%9F%99%8B%E2%80%8D%E2%99%82%20Hey%20Everyone%20%0A%0AToday%20I%20Just%20Found%20A%20Best%20Stylish%20Text%20Bot.%20This%20Bot%20Can%20Style%20any%20Text%0A%0A%F0%9F%A4%96%20Bot%20Link%20%3A%20%40bryll_urluploader_bot")
-        ],[
-            InlineKeyboardButton('Close ✖️', callback_data='close')
-        ]
-
-    ]
-    await m.reply_text(
-        text=text,
-        reply_markup=InlineKeyboardMarkup(buttons)
+@app.on_message(filters.command("start"))
+async def start(client, message):
+    await message.reply_text(
+        text=f"Hello {message.from_user.mention},\nI'm a telegram Education Bot From BRYLL EDUCATION bot by @bryllbots",
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(START_BTN)
     )
-@Client.on_callback_query()
-async def cb_handler(bot, update):
-    if update.data == "close":
-       await update.message.delete()
+
+START_BTN = [[
+     InlineKeyboardButton('Subjects', callback_data='subject_cd')
+     ],[
+     InlineKeyboardButton('❌ Close ✖', callback_data='close')
+     ]]
+
+@app.on_message(filters.command("subject"))
+async def subject(client,message):
+    if message.from_user.id not in AUTH_USERS:
+        await message.reply_text(
+            text=f"**Hey {message.from_user.mention}!\n\n👉 You have not purchased our premium plan. To use this command kindly purchase our premium plan.\n\n👉 Details of the premium plan👇👇👇\n\nIf you are interested in our service then you can buy the plan by contacting our helpdesk👇👇👇**",
+            reply_markup=InlineKeyboardMarkup(
+                [[
+                    InlineKeyboardButton('Contact Our Helpdesk', url=f'https://telegram.me/bryll_helpdesk_bot')
+                ]]
+              )
+            )
+        return
+    await message.reply_text(
+        text=f"Hey! Choose the Subject",
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(SUBJECT_BTN)
+        )
+
+SUBJECT_BTN = [[
+    InlineKeyboardButton('Biology', callback_data='biology_cd')
+    ],[
+    InlineKeyboardButton('Physics', callback_data='physics_cd')
+    ],[
+    InlineKeyboardButton('Chemistry', callback_data='chemistry_cd')
+    ]]
+                        
+
+@app.on_message(filters.command("biology"))
+async def biology(client,message):
+    await message.reply_text(
+        text=f"Hey! {message.from_user.mention} Choose the Chapter which you want to study",
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(BCHAPTER_BTN)
+    )
+
+BCHAPTER_BTN = [[
+     InlineKeyboardButton('Chapter 01', url=f'https://d2bps9p1kiy4ka.cloudfront.net/5eb393ee95fab7468a79d189/50c941fa-52bc-4714-9cc3-e1af8b86b590.pdf')
+
+
+     ],[
+     InlineKeyboardButton('Chapter 02', callback_data='bch1_cd')
+     ],[
+     InlineKeyboardButton('Chapter 03', url=f'https://telegram.me/bryllbots')
+     ],[
+     InlineKeyboardButton('⏪ Back ⏪', callback_data='subject_cd')
+     ]]
+
+
+@app.on_message(filters.command("physics"))
+async def physics(client,message):
+    await message.reply_text(
+        text=f"Hey! {message.from_user.mention} Choose the Chapter which you want to study",
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(PCHAPTER_BTN)
+     )
+    
+PCHAPTER_BTN = [[
+      InlineKeyboardButton('Chapter 01', url=f'https://telegram.me/bryllbots')
+      ],[
+      InlineKeyboardButton('Chapter 02', url=f'https://telegram.me/bryllbots')
+      ],[
+      InlineKeyboardButton('Chapter 03', url=f'https://telegram.me/bryllbots')
+      ],[
+      InlineKeyboardButton('⏪ Back ⏪', callback_data='subject_cd')
+      ]]
+
+
+@app.on_message(filters.command("chemistry"))
+async def chemistry(client,message):
+    await message.reply_text(
+        text=f"Hey! {message.from_user.mention} Choose the Chapter which you want to study",
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(CCHAPTER_BTN)
+    )
+    
+CCHAPTER_BTN = [[
+       InlineKeyboardButton('Chapter 01', url=f'https://telegram.me/bryllbots')
+       ],[
+       InlineKeyboardButton('Chapter 02', url=f'https://telegram.me/beyllbots')
+       ],[
+       InlineKeyboardButton('Chapter 03', url=f'https://telegram.me/bryllbots')
+       ],[
+       InlineKeyboardButton('⏪ Back ⏪', callback_data='subject_cd')
+       ]]
     
 
-
-
-@Client.on_message(filters.private & filters.incoming & filters.text)
-async def style_buttons(c, m, cb=False):
-    buttons = [[
-        InlineKeyboardButton('𝚃𝚢𝚙𝚎𝚠𝚛𝚒𝚝𝚎𝚛', callback_data='style+typewriter'),
-        InlineKeyboardButton('𝕆𝕦𝕥𝕝𝕚𝕟𝕖', callback_data='style+outline'),
-        InlineKeyboardButton('𝐒𝐞𝐫𝐢𝐟', callback_data='style+serif'),
-        ],[
-        InlineKeyboardButton('𝑺𝒆𝒓𝒊𝒇', callback_data='style+bold_cool'),
-        InlineKeyboardButton('𝑆𝑒𝑟𝑖𝑓', callback_data='style+cool'),
-        InlineKeyboardButton('Sᴍᴀʟʟ Cᴀᴘs', callback_data='style+small_cap'),
-        ],[
-        InlineKeyboardButton('𝓈𝒸𝓇𝒾𝓅𝓉', callback_data='style+script'),
-        InlineKeyboardButton('𝓼𝓬𝓻𝓲𝓹𝓽', callback_data='style+script_bolt'),
-        InlineKeyboardButton('ᵗⁱⁿʸ', callback_data='style+tiny'),
-        ],[
-        InlineKeyboardButton('ᑕOᗰIᑕ', callback_data='style+comic'),
-        InlineKeyboardButton('𝗦𝗮𝗻𝘀', callback_data='style+sans'),
-        InlineKeyboardButton('𝙎𝙖𝙣𝙨', callback_data='style+slant_sans'),
-        ],[
-        InlineKeyboardButton('𝘚𝘢𝘯𝘴', callback_data='style+slant'),
-        InlineKeyboardButton('𝖲𝖺𝗇𝗌', callback_data='style+sim'),
-         InlineKeyboardButton('Ⓒ︎Ⓘ︎Ⓡ︎Ⓒ︎Ⓛ︎Ⓔ︎Ⓢ︎', callback_data='style+circles'),
-        ],[
-        InlineKeyboardButton('🅒︎🅘︎🅡︎🅒︎🅛︎🅔︎🅢︎', callback_data='style+circle_dark'),
-        InlineKeyboardButton('𝔊𝔬𝔱𝔥𝔦𝔠', callback_data='style+gothic'),
-        InlineKeyboardButton('𝕲𝖔𝖙𝖍𝖎𝖈', callback_data='style+gothic_bolt'),
-        ],[
-        InlineKeyboardButton('C͜͡l͜͡o͜͡u͜͡d͜͡s͜͡', callback_data='style+cloud'),
-        InlineKeyboardButton('H̆̈ă̈p̆̈p̆̈y̆̈', callback_data='style+happy'),
-        InlineKeyboardButton('S̑̈ȃ̈d̑̈', callback_data='style+sad'),
-        ],[
-        InlineKeyboardButton('Next ➡️', callback_data="nxt")
-    ]]
-    if not cb:
-        await m.reply_text(m.text, reply_markup=InlineKeyboardMarkup(buttons), quote=True)
-    else:
-        await m.answer()
-        await m.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
-
-
-@Client.on_callback_query(filters.regex('^nxt'))
-async def nxt(c, m):
-    if m.data == "nxt":
-        buttons = [[
-            InlineKeyboardButton('🇸 🇵 🇪 🇨 🇮 🇦 🇱 ', callback_data='style+special'),
-            InlineKeyboardButton('🅂🅀🅄🄰🅁🄴🅂', callback_data='style+squares'),
-            InlineKeyboardButton('🆂︎🆀︎🆄︎🅰︎🆁︎🅴︎🆂︎', callback_data='style+squares_bold'),
-            ],[
-            InlineKeyboardButton('ꪖꪀᦔꪖꪶꪊᥴ𝓲ꪖ', callback_data='style+andalucia'),
-            InlineKeyboardButton('爪卂几ᘜ卂', callback_data='style+manga'),
-            InlineKeyboardButton('S̾t̾i̾n̾k̾y̾', callback_data='style+stinky'),
-            ],[
-            InlineKeyboardButton('B̥ͦu̥ͦb̥ͦb̥ͦl̥ͦe̥ͦs̥ͦ', callback_data='style+bubbles'),
-            InlineKeyboardButton('U͟n͟d͟e͟r͟l͟i͟n͟e͟', callback_data='style+underline'),
-            InlineKeyboardButton('꒒ꍏꀷꌩꌃꀎꁅ', callback_data='style+ladybug'),
-            ],[
-            InlineKeyboardButton('R҉a҉y҉s҉', callback_data='style+rays'),
-            InlineKeyboardButton('B҈i҈r҈d҈s҈', callback_data='style+birds'),
-            InlineKeyboardButton('S̸l̸a̸s̸h̸', callback_data='style+slash'),
-            ],[
-            InlineKeyboardButton('s⃠t⃠o⃠p⃠', callback_data='style+stop'),
-            InlineKeyboardButton('S̺͆k̺͆y̺͆l̺͆i̺͆n̺͆e̺͆', callback_data='style+skyline'),
-            InlineKeyboardButton('A͎r͎r͎o͎w͎s͎', callback_data='style+arrows'),
-            ],[
-            InlineKeyboardButton('ዪሀክቿነ', callback_data='style+qvnes'),
-            InlineKeyboardButton('S̶t̶r̶i̶k̶e̶', callback_data='style+strike'),
-            InlineKeyboardButton('F༙r༙o༙z༙e༙n༙', callback_data='style+frozen')
-            ],[
-            InlineKeyboardButton('⬅️ Back', callback_data='nxt+0')
-        ]]
-        await m.answer()
-        await m.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
-    else:
-        await style_buttons(c, m, cb=True)
-
-
-@Client.on_callback_query(filters.regex('^style'))
-async def style(c, m):
-    await m.answer()
-    cmd, style = m.data.split('+')
-
-    if style == 'typewriter':
-        cls = Fonts.typewriter
-    if style == 'outline':
-        cls = Fonts.outline
-    if style == 'serif':
-        cls = Fonts.serief
-    if style == 'bold_cool':
-        cls = Fonts.bold_cool
-    if style == 'cool':
-        cls = Fonts.cool
-    if style == 'small_cap':
-        cls = Fonts.smallcap
-    if style == 'script':
-        cls = Fonts.script
-    if style == 'script_bolt':
-        cls = Fonts.bold_script
-    if style == 'tiny':
-        cls = Fonts.tiny
-    if style == 'comic':
-        cls = Fonts.comic
-    if style ==  'sans':
-        cls = Fonts.san
-    if style == 'slant_sans':
-        cls = Fonts.slant_san
-    if style == 'slant':
-        cls = Fonts.slant
-    if style == 'sim':
-        cls = Fonts.sim
-    if style == 'circles':
-        cls = Fonts.circles
-    if style == 'circle_dark':
-        cls = Fonts.dark_circle
-    if style == 'gothic':
-        cls = Fonts.gothic
-    if style == 'gothic_bolt':
-        cls = Fonts.bold_gothic
-    if style == 'cloud':
-        cls = Fonts.cloud
-    if style == 'happy':
-        cls = Fonts.happy
-    if style == 'sad':
-        cls = Fonts.sad
-    if style == 'special':
-        cls = Fonts.special
-    if style == 'squares':
-        cls = Fonts.square
-    if style == 'squares_bold':
-        cls = Fonts.dark_square
-    if style == 'andalucia':
-        cls = Fonts.andalucia
-    if style == 'manga':
-        cls = Fonts.manga
-    if style == 'stinky':
-        cls = Fonts.stinky
-    if style == 'bubbles':
-        cls = Fonts.bubbles
-    if style == 'underline':
-        cls = Fonts.underline
-    if style == 'ladybug':
-        cls = Fonts.ladybug
-    if style == 'rays':
-        cls = Fonts.rays
-    if style == 'birds':
-        cls = Fonts.birds
-    if style == 'slash':
-        cls = Fonts.slash
-    if style == 'stop':
-        cls = Fonts.stop
-    if style == 'skyline':
-        cls = Fonts.skyline
-    if style == 'arrows':
-        cls = Fonts.arrows
-    if style == 'qvnes':
-        cls = Fonts.rvnes
-    if style == 'strike':
-        cls = Fonts.strike
-    if style == 'frozen':
-        cls = Fonts.frozen
-    new_text = cls(m.message.reply_to_message.text)
-    try:
-        await m.message.edit_text(new_text, reply_markup=m.message.reply_markup)
-    except:
-        pass
+@app.on_message(filters.command("me"))
+async def me(client,message):
+    await message.reply_text(
+        text=f"""**Your Details**
+        
+**First Name:-** <code>{message.from_user.first_name}</code>
+**Last Name:-** <code>{message.from_user.last_name}</code>
+**User Name:-** @{message.from_user.username}
+**User ID:-** <code>{message.from_user.id}</code>""",
+        disable_web_page_preview=True,
+      )
