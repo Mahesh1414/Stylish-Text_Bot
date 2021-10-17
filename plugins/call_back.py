@@ -3,7 +3,7 @@ import logging
 import time
 import string
 import traceback
-import buttons
+from buttons import BTNS
 from pyrogram import Client, filters
 import datetime
 from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
