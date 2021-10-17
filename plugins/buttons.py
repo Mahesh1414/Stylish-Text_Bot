@@ -1,3 +1,4 @@
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 class BTNS(object):
   
   START_BTN = [[
