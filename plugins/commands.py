@@ -13,6 +13,9 @@ logging.basicConfig()
 logger = logging.getLogger(__name__)
 
 
+AUTH_USERS = [1735201144, 1033516714]
+
+
 @Client.on_message(filters.command("start"))
 async def start(client, message):
     await message.reply_text(
@@ -118,9 +121,13 @@ async def me(client,message):
     await message.reply_text(
         text=f"""**Your Details**
         
+
 **First Name:-** <code>{message.from_user.first_name}</code>
+
 **Last Name:-** <code>{message.from_user.last_name}</code>
+
 **User Name:-** @{message.from_user.username}
+
 **User ID:-** <code>{message.from_user.id}</code>""",
         disable_web_page_preview=True,
       )
