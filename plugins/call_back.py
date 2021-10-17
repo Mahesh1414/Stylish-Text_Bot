@@ -3,7 +3,7 @@ import logging
 import time
 import string
 import traceback
-import commands
+from buttons import BTNS
 from pyrogram import Client, filters
 import datetime
 from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
@@ -17,13 +17,13 @@ async def cd_handler(bot, update):
         await update.message.edit_text(
             text=f"Hey! {update.from_user.mention} Choose the Subject",
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(SUBJECT_BTN)
+            reply_markup=InlineKeyboardMarkup(BTNS.SUBJECT_BTN)
           )
     elif update.data =="biology_cd":
         await update.message.edit_text(
             text=f"Hey! {update.from_user.mention} Choose the Chapter which you want to study in Biology",
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(BCHAPTER_BTN)
+            reply_markup=InlineKeyboardMarkup(BTNS.BCHAPTER_BTN)
           )
     elif update.data == "physics_cd":
         await update.message.edit_text(
