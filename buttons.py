@@ -25,3 +25,23 @@ class BTNS(object):
      ],[
      InlineKeyboardButton('⏪ Back ⏪', callback_data='subject_cd')
      ]]
+  
+  PCHAPTER_BTN = [[
+      InlineKeyboardButton('Chapter 01', url=f'https://telegram.me/bryllbots')
+      ],[
+      InlineKeyboardButton('Chapter 02', url=f'https://telegram.me/bryllbots')
+      ],[
+      InlineKeyboardButton('Chapter 03', url=f'https://telegram.me/bryllbots')
+      ],[
+      InlineKeyboardButton('⏪ Back ⏪', callback_data='subject_cd')
+      ]]
+
+  CCHAPTER_BTN = [[
+       InlineKeyboardButton('Chapter 01', url=f'https://telegram.me/bryllbots')
+       ],[
+       InlineKeyboardButton('Chapter 02', url=f'https://telegram.me/beyllbots')
+       ],[
+       InlineKeyboardButton('Chapter 03', url=f'https://telegram.me/bryllbots')
+       ],[
+       InlineKeyboardButton('⏪ Back ⏪', callback_data='subject_cd')
+       ]]
