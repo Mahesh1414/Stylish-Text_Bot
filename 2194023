@@ -1,0 +1,54 @@
+import requests
+
+url="https://elearn.crwilladmin.com/api/v1/"
+
+input_email = input('Provide Your Email To Login : ')
+
+input_password = input('Provide Your Password To Continue : ')
+
+data= {
+ "deviceType":"android",
+    "password":input_password,
+    "deviceModel":"Asus ASUS_X00TD",
+    "deviceVersion":"Pie(Android 9.0)",
+    "email":input_email,
+}
+
+#post_hdr={"content-type":"application/json;charset=UTF-8"}
+
+login_response=requests.post(url+"login-other",data)
+
+token=login_response.json( )["data"]["token"]
+
+get_hdr={
+ "token":token,
+}
+print(token)
+
+import json 
+import requests
+import subprocess
+print("                    ᎪᎠᏆͲᎽᎪ★")
+
+print("HERE WE GO......")
+
+print("YOU HAVE THESE BATCHES:-")
+p=requests.get("https://elearn.crwilladmin.com/api/v1/comp/my-batch?&token="+token)
+topics = json.loads(p.text)
+q = topics["data"]["batchData"]
+for data in q:    
+    aa=(data["id"]) +":" +str(data["batchName"])  
+    print(aa) 
+a=str(input("input topic id:"))
+z=f"https://elearn.crwilladmin.com/api/v1/comp/batch-notes/{a}?topicid="+str(a)+"&token="+token
+f=requests.get(z)
+print(type(f.text))
+videos = json.loads(f.text)
+x = videos["data"]["notesDetails"]
+for data in x:
+   name=(data["docTitle"])
+   s=str(data["docUrl"]) 
+   print(f'Downloading :- "{name}"')
+   dl = subprocess.run(f'aria2c "{s}"', shell=True)
+   
+   
